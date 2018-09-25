@@ -79,8 +79,18 @@
         :model="project"
         :inline="true"
         label-width="100px">
+        <el-form-item label="项目状态">
+          <el-select placeholder="请选择项目状态" v-model="project.status">
+            <el-option
+              v-for="pStatus in projectStatus"
+              :key="pStatus.value"
+              :label="pStatus.name"
+              :value="pStatus.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="项目类型">
-          <el-select placeholder="请选择项目类型" v-model="project.type">
+          <el-select disabled placeholder="请选择项目类型" v-model="project.type">
             <el-option
               v-for="pType in projectType"
               :key="pType.value"
@@ -88,8 +98,6 @@
               :value="pType.value">
             </el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item>
         </el-form-item>
       </el-form>
       <!-- 项目信息 -->
@@ -152,7 +160,6 @@
         <el-form-item prop="masters" label="项目主管">
           <el-select
             filterable
-            multiple
             remote
             placeholder="请选择项目主管"
             remoteplaceholder="请输入关键词"
@@ -313,8 +320,33 @@ export default {
           { required: true, message: '请输入事件名称', trigger: 'blur' }
         ]
       },
+      projectStatus: [
+        {
+          value: 100,
+          name: '类型a'
+        },
+        {
+          value: 200,
+          name: '类型b'
+        }
+      ],
+      projectType: [
+        {
+          value: 100,
+          name: '开发中'
+        },
+        {
+          value: 200,
+          name: '维护中'
+        },
+        {
+          value: 300,
+          name: '已关停'
+        }
+      ],
       project: {
-        type: 1,
+        status: 100,
+        type: 100,
         events: []
       },
       projects: [
@@ -451,20 +483,6 @@ export default {
       searchingPmgo: false,
       createPmgo: false,
       prefixInPmgo: '',
-      projectType: [
-        {
-          value: 1,
-          name: '开发中'
-        },
-        {
-          value: 2,
-          name: '维护中'
-        },
-        {
-          value: 3,
-          name: '已关停'
-        }
-      ],
       addingEvent: false,
       templateId: '',
       newEvent: {
@@ -509,7 +527,7 @@ export default {
         return false
       }
       createProject(this.project)
-        .then((d) => {
+        .then(() => {
           this.$message({
             message: '创建成功',
             type: 'success'
@@ -517,7 +535,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: '创建失败',
+            message: err.response.error || '创建失败',
             type: 'dangers'
           })
         })
