@@ -21,6 +21,10 @@ import Manage from './views/manage/index'
 import SysUser from './views/manage/sysuser'
 import BackUser from './views/manage/backuser'
 
+// 日志
+import Log from './views/log/index'
+import System from './views/log/system'
+
 Vue.use(Router)
 
 export default new Router({
@@ -135,6 +139,20 @@ export default new Router({
           component: BackUser,
           meta: {
             title: '后台成员列表'
+          }
+        }
+      ]
+    }, {
+      path: '/log',
+      name: 'Log',
+      component: Log,
+      children: [
+        {
+          path: 'system',
+          name: 'System',
+          component: System,
+          meta: {
+            title: '系统日志'
           }
         }
       ]
