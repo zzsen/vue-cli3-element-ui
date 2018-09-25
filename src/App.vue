@@ -62,6 +62,24 @@ export default {
             link: '/manage/backuser'
           }
         ]
+      }, {
+        name: '日志',
+        link: '/log/systemlog',
+        children: [
+          {
+            name: '系统日志',
+            link: '/log/system'
+          }, {
+            name: '项目日志',
+            link: '/log/project'
+          }, {
+            name: '事件日志',
+            link: '/log/event'
+          }, {
+            name: '需求日志',
+            link: '/log/demand'
+          }
+        ]
       }
     ]
     this.menus = menus
