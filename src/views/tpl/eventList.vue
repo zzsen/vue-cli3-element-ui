@@ -70,20 +70,31 @@
           label="操作">
           <template slot-scope="scope">
             <el-button
+              circle
               size="mini"
+              title="编辑"
+              type="primary"
+              v-if="!scope.row.isDelete"
+              @click="deleteEvent(scope.row)">
+              <i class="el-icon-edit"/>
+            </el-button>
+            <el-button
+              circle
+              size="mini"
+              title="删除"
               type="danger"
               v-if="!scope.row.isDelete"
               @click="deleteEvent(scope.row)">
               <i class="el-icon-delete"/>
-              删除
             </el-button>
             <el-button
+              circle
               size="mini"
-              type="primary"
+              title="恢复"
+              type="warning"
               @click="undeleteEvent(scope.row)"
               v-else>
               <i class="mdi mdi-undo-variant"/>
-              恢复
             </el-button>
           </template>
         </el-table-column>
