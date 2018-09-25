@@ -1,137 +1,147 @@
 <template>
   <div class="backuser">
-    <el-container>
-      <el-header>
-        <div class='title' style='position: relative;'>
-          后台成员
-          <el-button type="primary" round plain class='addMember' size='mini' @click="setAddingUser">
-            <i class='el-icon-circle-plus-outline' style='margin-right:5px'/>添加成员
-          </el-button>
-        </div>
-      </el-header>
-      <el-main>
-        <el-table
-          stripe
-          align='left'
-          :data="user"
-          max-height="300"
-          style="width: 100%">
-          <el-table-column
-            label="姓名"
-            min-width="180">
-            <template slot-scope="scope">
-              <span class='defaultCursor'>
-                {{scope.row.name}}
-                <el-tag
-                  v-if='activeUser.id===scope.row.id'
-                  type='default'
-                  size='mini'>
-                  it's me
-                </el-tag>
-                <el-tag
-                  v-if='scope.row.status!="正常"'
-                  type='danger'
-                  size='mini'>
-                  {{scope.row.status}}
-                </el-tag>
+    <el-card class="box-card">
+      <div class="clearfix" slot="header">
+        后台成员
+        <el-button style="float: right; padding: 3px 0" type="text" @click="setAddingUser">
+          <i class="el-icon-circle-plus-outline"/>添加成员
+        </el-button>
+      </div>
+      <el-table
+        stripe
+        align='left'
+        max-height="300"
+        style="width: 100%"
+        :data="user">
+        <el-table-column
+          label="姓名"
+          min-width="180">
+          <template slot-scope="scope">
+            <span class="defaultCursor">
+              {{scope.row.name}}
+              <el-tag
+                size="mini"
+                type="default"
+                v-if="activeUser.id===scope.row.id">
+                it's me
+              </el-tag>
+              <el-tag
+                size="mini"
+                type="danger"
+                v-if="scope.row.status!=='正常'">
+                {{scope.row.status}}
+              </el-tag>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="成员角色"
+          min-width="180">
+          <template slot-scope="scope">
+            <el-popover
+              placement="left-start"
+              trigger="hover"
+              width="200"
+              :content="scope.row.createInfo">
+              <span class="defaultCursor" slot="reference">
+                {{scope.row.roleName}}
               </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="成员角色"
-            min-width="180">
-            <template slot-scope="scope">
-              <el-popover
-                placement="left-start"
-                width="200"
-                trigger="hover"
-                :content="scope.row.createInfo">
-                <span class='defaultCursor' slot="reference">
-                  {{scope.row.roleName}}
-                </span>
-              </el-popover>
-              <div style="display:inline-block;margin-left:10px" v-if="!scope.row.isdelete">
-                <el-button size="mini" type="primary" icon="el-icon-edit" circle @click='setEditingUser(scope.row)' title="编辑"></el-button>
-                <el-button size="mini" type="danger" icon="el-icon-delete" circle @click='deleteSysUser(scope.row)' title="删除"></el-button>
-              </div>
-              <el-tag class='defaultCursor' type='danger' size='mini' closable @close='undeleteSysUser(scope.row)' v-else>已删除</el-tag>
-            </template>
-          </el-table-column>
-        </el-table>
-        <!-- 添加成员角色 -->
-        <el-dialog title="添加成员" :visible.sync="adding" width="500px">
-          <el-form :model="userToAdd">
-            <el-form-item label="姓名" label-width="120px">
-              <!-- <el-input v-model="userToEdit.name" disabled></el-input> -->
-              <el-autocomplete
-                :debounce='500'
-                v-model="userToAdd.name"
-                :fetch-suggestions="searchUser"
-                placeholder="请输入内容"
-                @select="handleSelect"
-                :popper-append-to-body=false
-                value-key="name"
-              >
-              </el-autocomplete>
-            </el-form-item>
-            <el-form-item label="角色" label-width="120px">
-              <el-select v-model="userToAdd.role" placeholder="请选择角色">
-                <el-option v-for='role in roles' :key='role.value'
-                  :label="role.name" :value="role.value" :selected='role.value===userToAdd.role'>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="closeDialog">取 消</el-button>
-            <el-button type="primary" @click="closeDialog">确 定</el-button>
-          </div>
-        </el-dialog>
-        <!-- 修改成员角色dialog -->
-        <el-dialog title="修改角色" :visible.sync="editing" width="500px">
-          <el-form :model="userToEdit">
-            <el-form-item label="姓名" label-width="120px">
-              <el-input v-model="userToEdit.name" disabled></el-input>
-            </el-form-item>
-            <el-form-item label="角色" label-width="120px">
-              <el-select v-model="userToEdit.role" placeholder="请选择活动区域">
-                <el-option v-for='role in roles' :key='role.value'
-                  :label="role.name" :value="role.value" :selected='role.value===userToEdit.role'>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="closeDialog">取 消</el-button>
-            <el-button type="primary" @click="closeDialog">确 定</el-button>
-          </div>
-        </el-dialog>
-        <!-- 删除成员dialog -->
-        <el-dialog
-          title="删除成员"
-          :visible.sync="deleting"
-          width="30%"
-          center>
-          <span>{{deleteContent}}</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="closeDialog">取 消</el-button>
-            <el-button type="danger" @click="closeDialog">确 定</el-button>
-          </span>
-        </el-dialog>
-        <!-- 撤销删除成员dialog -->
-        <el-dialog
-          title="撤销删除"
-          :visible.sync="undeleting"
-          width="30%"
-          center>
-          <span>{{undeleteContent}}</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="closeDialog">取 消</el-button>
-            <el-button type="primary" @click="closeDialog">确 定</el-button>
-          </span>
-        </el-dialog>
-      </el-main>
-    </el-container>
+            </el-popover>
+            <div style="display:initial;margin-left:10px" v-if="!scope.row.isdelete">
+              <el-button
+                circle
+                icon="mdi mdi-account-edit"
+                size="mini"
+                title="编辑"
+                type="primary"
+                v-if="activeUser.role>=scope.row.role"
+                @click="setEditingUser(scope.row)"></el-button>
+              <el-button
+                circle
+                icon="el-icon-delete"
+                size="mini"
+                title="删除"
+                type="danger"
+                v-if="activeUser.role>=scope.row.role"
+                @click="deleteSysUser(scope.row)">
+              </el-button>
+            </div>
+            <el-tag
+              closable
+              class="defaultCursor"
+              size="mini"
+              type="danger"
+              v-else
+              @close="undeleteSysUser(scope.row)">
+              已删除
+            </el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 添加成员角色 -->
+      <el-dialog title="添加成员"
+        width="500px"
+        :visible.sync="adding">
+        <el-form>
+          <el-form-item label="姓名" label-width="120px">
+            <el-select
+              filterable
+              multiple
+              remote
+              remoteplaceholder="请输入关键词"
+              v-model="userToAdd"
+              :loading="searchingUser"
+              :remote-method="searchUser"
+              @focus="searchUser">
+              <el-option
+                v-for="user in userArray"
+                :key="user.id"
+                :label="user.name"
+                :value="user.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="角色" label-width="120px">
+            <el-select placeholder="请选择角色" v-model="roleToAdd">
+              <el-option
+                v-for="role in roles"
+                :key="role.value"
+                :label="role.name"
+                :selected="role.value===roleToAdd"
+                :value="role.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="closeDialog">取 消</el-button>
+          <el-button type="primary" @click="closeDialog">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 修改成员角色dialog -->
+      <el-dialog title="修改角色" width="500px" :visible.sync="editing">
+        <el-form :model="userToEdit">
+          <el-form-item label="姓名" label-width="120px">
+            <el-input disabled v-model="userToEdit.name"></el-input>
+          </el-form-item>
+          <el-form-item label="角色" label-width="120px">
+            <el-select placeholder="请选择活动区域" v-model="userToEdit.role">
+              <el-option
+                v-for="role in roles"
+                :key="role.value"
+                :label="role.name"
+                :selected="role.value===userToEdit.role"
+                :value="role.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div class="dialog-footer" slot="footer">
+          <el-button @click="closeDialog">取 消</el-button>
+          <el-button type="primary" @click="closeDialog">确 定</el-button>
+        </div>
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
@@ -199,61 +209,70 @@ export default {
           createInfo: '用户a于2018年12月12日添加用户a的管理炒鸡管理员角色'
         }
       ],
-      searchusers: '',
-      userToAdd: {
-        role: 2
-      },
-      idToAdd: '',
+      searchingUser: false,
+      userArray: [],
+      userToAdd: [],
       roleToAdd: 3,
       userToEdit: {},
       adding: false,
-      editing: false,
-      deleting: false,
-      deleteContent: '',
-      undeleting: false,
-      undeleteContent: ''
+      editing: false
     }
   },
   methods: {
     closeDialog () {
       this.adding = false
       this.editing = false
-      this.deleting = false
-      this.undeleting = false
     },
-    searchUser (queryString, callback) {
-      var userAfterSearch = this.user
-      console.log(userAfterSearch)
-      // userAfterSearch = queryString ? userAfterSearch.filter(this.createStateFilter(queryString)) : userAfterSearch
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        callback(userAfterSearch)
-      }, 3000 * Math.random())
-    },
-    createStateFilter (queryString) {
-      return (state) => {
-        console.log(state)
-        return (state.name.indexOf(queryString.toLowerCase()) === 0)
-      }
-    },
-    handleSelect (val) {
-      this.userAfterSearch = val
+    searchUser (queryString) {
+      this.userArray = this.user
+      this.searchingUser = false
     },
     setAddingUser () {
       this.adding = true
-      this.userToAdd = {}
+      this.searchingUser = true
+      this.userToAdd = []
     },
     setEditingUser (userinfo) {
       this.editing = true
       this.userToEdit = userinfo
     },
     deleteSysUser (userinfo) {
-      this.deleting = true
-      this.deleteContent = `是否确定删除 ${userinfo.id !== this.activeUser.id ? userinfo.name : '自己'} 的 ${userinfo.roleName} 角色?${userinfo.id === this.activeUser.id ? '(注意!此操作将导致你后续无法访问后台管理)' : ''}`
+      let deleteContent = `是否确定删除 ${userinfo.id !== this.activeUser.id ? userinfo.name : '自己'} 的 ${userinfo.roleName} 角色?`
+      this.$confirm(deleteContent, '删除成员', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'error',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     undeleteSysUser (userinfo) {
-      this.undeleting = true
-      this.undeleteContent = `是否确定撤销删除 ${userinfo.name} 的 ${userinfo.roleName} 角色?`
+      let undeleteContent = `是否确定撤销删除 ${userinfo.name} 的 ${userinfo.roleName} 角色?`
+      this.$confirm(undeleteContent, '撤销删除成员', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
@@ -265,16 +284,6 @@ export default {
 }
 .el-select{
   width: 100%;
-}
-.addMember{
-  position: absolute;
-  right:0;
-  top: 20px;
-}
-.addMember{
-  position: absolute;
-  right: 0;
-  top: 20px;
 }
 .el-form-item__content>.el-autocomplete{
   width: 100%

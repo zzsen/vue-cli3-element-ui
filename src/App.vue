@@ -70,7 +70,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -84,6 +84,7 @@ export default {
   overflow-y: auto;
   padding:75px 100px 20px;
   max-width: 1280px;
+  min-width: 1024px;
   margin: 0 auto;
 }
 li.el-submenu>.el-submenu__title{
@@ -99,17 +100,15 @@ li.el-submenu>.el-submenu__title{
 .pointerCursor{
   cursor: pointer;
 }
-.el-container{
+.el-card{
+  width: 100%;
 }
-.el-main{
-  background-color: white;
+.clearfix{
+  text-align: left;
 }
-.el-header{
-  height: 50px !important;
-  background-color: white;
-}
-.el-header>.title{
-  padding-top:10px;
-  font-size: 30px !important;
+.addBtn{
+  position: absolute;
+  right: 0;
+  top: 20px;
 }
 </style>

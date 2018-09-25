@@ -6,12 +6,15 @@ import Home from './views/Home.vue'
 import Project from './views/project/index'
 import ProjectList from './views/project/list'
 import ProjectDetail from './views/project/detail'
+import CreateProject from './views/project/create'
 
 // 模板
-import Template from './views/template/index'
-import ProjectListTemplate from './views/template/projectList'
-import EventListTemplate from './views/template/eventList'
-import DemandListTemplate from './views/template/demandList'
+import Template from './views/tpl/index'
+import ProjectListTemplate from './views/tpl/projectList'
+import ProjectTemplateForm from './views/tpl/projectForm'
+import EventListTemplate from './views/tpl/eventList'
+import EventTemplateForm from './views/tpl/eventForm'
+import DemandListTemplate from './views/tpl/demandList'
 
 // 管理
 import Manage from './views/manage/index'
@@ -31,7 +34,7 @@ export default new Router({
           name: 'HomeList',
           component: ProjectList,
           meta: {
-            title: '首页'
+            title: '项目列表'
           }
         }
       ]
@@ -52,6 +55,11 @@ export default new Router({
           path: 'detail/:id',
           name: 'ProjectDetail',
           component: ProjectDetail
+        },
+        {
+          path: 'create',
+          name: 'CreateProject',
+          component: CreateProject
         }
       ]
     }, {
@@ -68,11 +76,35 @@ export default new Router({
           }
         },
         {
+          path: 'createproject',
+          name: 'CreateProjectTemplate',
+          component: ProjectTemplateForm,
+          meta: {
+            title: '创建项目模板'
+          }
+        },
+        {
+          path: 'editproject/:id',
+          name: 'EditProjectTemplate',
+          component: ProjectTemplateForm,
+          meta: {
+            title: '编辑项目模板'
+          }
+        },
+        {
           path: 'eventlist',
           name: 'EventListTemplate',
           component: EventListTemplate,
           meta: {
             title: '事件模板列表'
+          }
+        },
+        {
+          path: 'Createevent',
+          name: 'CreateEventTemplate',
+          component: EventTemplateForm,
+          meta: {
+            title: '创建事件模板'
           }
         },
         {

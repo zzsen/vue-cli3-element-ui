@@ -1,6 +1,6 @@
 <template>
-  <div class='detail'>
-    <img src='../../assets/icon.png'>11111111
+  <div class="detail">
+    <img src="../../assets/icon.png">11111111
   </div>
 </template>
 
@@ -16,5 +16,5 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
 </style>
