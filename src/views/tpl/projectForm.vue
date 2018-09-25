@@ -1,5 +1,5 @@
 <template>
-  <div class="projectList">
+  <div class="projectForm">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         {{isCreate ? '新建' : '编辑'}}项目模板
@@ -108,7 +108,7 @@
 import draggable from 'vuedraggable'
 
 export default {
-  name: 'projectList',
+  name: 'projectForm',
   components: {
     draggable
   },

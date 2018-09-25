@@ -1,5 +1,5 @@
 <template>
-  <div class="projectList">
+  <div class="eventForm">
     <el-card class="box-card">
       <div class="clearfix" slot="header">
         新建事件模板
@@ -89,7 +89,7 @@
 import draggable from 'vuedraggable'
 
 export default {
-  name: 'projectList',
+  name: 'eventForm',
   components: {
     draggable
   },
