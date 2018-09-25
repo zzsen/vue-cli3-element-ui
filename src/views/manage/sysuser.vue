@@ -276,9 +276,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.sysuser{
-  max-width: 1280px;
-}
 .el-form{
   padding-right: 60px
 }
