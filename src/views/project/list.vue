@@ -101,6 +101,12 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        background
+        layout="total, prev, pager, next"
+        :page-size="100"
+        :total="1000">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -187,5 +193,10 @@ tr.el-table__row>td>div.cell,
 tr.el-table__row>td>div.cell>div{
   width:100% !important;
   height:100% !important;
+}
+.el-pagination{
+  float: right;
+  margin-top:10px;
+  margin-bottom: 10px;
 }
 </style>
