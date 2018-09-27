@@ -1,17 +1,23 @@
 <template>
   <div class="detail">
-    <img src="../../assets/icon.png">11111111
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        项目列表
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'detail',
   components: {
-    // HelloWorld
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
   }
 }
 </script>
