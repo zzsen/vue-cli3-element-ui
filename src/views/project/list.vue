@@ -23,7 +23,7 @@
             <div
               class="link"
               style="cursor:pointer"
-              @click="$router.push({ name: 'ProjectDetail', params: { id: scope.row.id } })">
+              @click="viewDetail(scope.row.id)">
               {{scope.row.name}}
               <el-tag
                 closable
@@ -183,6 +183,10 @@ export default {
           message: '已取消撤销删除'
         })
       })
+    },
+    viewDetail (id) {
+      this.$store.dispatch('SetBackUrl', window.location.href)
+      this.$router.push({ name: 'ProjectDetail', params: { id } })
     }
   }
 }

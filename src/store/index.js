@@ -29,22 +29,33 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    activeUser: {}
+    activeUser: {},
+    backUrl: ''
   },
   getters: {
     activeUser: state => {
       return loadState(state, 'activeUser', 'active-user')
+    },
+    backUrl: state => {
+      return loadState(state, 'backUrl', 'back-url')
     }
   },
   actions: {
     setActiveUser ({ commit }, user) {
       sessionStorage.setItem(`${prefix}active-user`, stringify(user))
       commit(types.SET_ACTIVE_USER)
+    },
+    SetBackUrl ({ commit }, backUrl) {
+      sessionStorage.setItem(`${prefix}back-url`, backUrl)
+      commit(types.SET_BACK_URL)
     }
   },
   mutations: {
     [types.SET_ACTIVE_USER] (state, user) {
       state.activeUser = user
+    },
+    [types.SET_BACK_URL] (state, backUrl) {
+      state.backUrl = backUrl
     }
   }
 })
