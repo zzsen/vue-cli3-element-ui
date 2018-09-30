@@ -1,80 +1,86 @@
 <template>
   <div class="sysuser">
-    <el-card class="box-card">
-      <div class="clearfix" slot="header">
-        系统成员
-        <el-button style="float: right; padding: 3px 0" type="text" @click="setAddingUser">
-          <i class="el-icon-circle-plus-outline"/>添加成员
-        </el-button>
-      </div>
-      <el-table
-        stripe
-        align="left"
-        max-height="300"
-        style="width: 100%"
-        :data="user">
-        <el-table-column
-          label="姓名"
-          min-width="180">
-          <template slot-scope="scope">
-            <span class="defaultCursor">
-              {{scope.row.name}}
-              <el-tag
-                size="mini"
-                type="default"
-                v-if="activeUser.id===scope.row.id">
-                it's me
-              </el-tag>
-              <el-tag
-                size="mini"
-                type="danger"
-                v-if="scope.row.status!=='正常'">
-                {{scope.row.status}}
-              </el-tag>
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="成员角色"
-          min-width="180">
-          <template slot-scope="scope">
-            <el-popover
-              placement="left-start"
-              trigger="hover"
-              width="200"
-              :content="scope.row.createInfo">
-              <span class="defaultCursor" slot="reference">
-                {{scope.row.roleName}}
-              </span>
-            </el-popover>
-            <div style="display:initial;margin-left:10px" v-if="!scope.row.isdelete">
-              <el-button
-                circle
-                icon="mdi mdi-account-edit"
-                size="mini"
-                title="编辑"
-                type="primary"
-                @click="setEditingUser(scope.row)"></el-button>
-              <el-button
-                circle
-                icon="el-icon-delete"
-                size="mini"
-                title="删除"
-                type="danger"
-                @click="deleteSysUser(scope.row)"></el-button>
-            </div>
-            <el-tag
-              closable
-              v-else
-              class="defaultCursor"
-              size="mini"
-              type="danger"
-              @close="undeleteSysUser(scope.row)">
-              已删除
-            </el-tag>
-          </template>
-        </el-table-column>
-      </el-table>
+    <el-card class="box-card" style="position: relative;">
+      <el-button
+        style="padding: 3px 0;position: absolute;right: 20px;"
+        type="text"
+        v-if="activeTab==='sys'"
+        @click="setAddingUser">
+        <i class="el-icon-circle-plus-outline"/>添加成员
+      </el-button>
+      <el-tabs v-model="activeTab">
+        <el-tab-pane label="系统角色" name="sys">
+          <el-table
+            stripe
+            align="left"
+            max-height="300"
+            style="width: 100%"
+            :data="user">
+            <el-table-column
+              label="姓名"
+              min-width="180">
+              <template slot-scope="scope">
+                <span class="defaultCursor">
+                  {{scope.row.name}}
+                  <el-tag
+                    size="mini"
+                    type="default"
+                    v-if="activeUser.id===scope.row.id">
+                    it's me
+                  </el-tag>
+                  <el-tag
+                    size="mini"
+                    type="danger"
+                    v-if="scope.row.status!=='正常'">
+                    {{scope.row.status}}
+                  </el-tag>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="成员角色"
+              min-width="180">
+              <template slot-scope="scope">
+                <el-popover
+                  placement="left-start"
+                  trigger="hover"
+                  width="200"
+                  :content="scope.row.createInfo">
+                  <span class="defaultCursor" slot="reference">
+                    {{scope.row.roleName}}
+                  </span>
+                </el-popover>
+                <div style="display:initial;margin-left:10px" v-if="!scope.row.isdelete">
+                  <el-button
+                    circle
+                    icon="mdi mdi-account-edit"
+                    size="mini"
+                    title="编辑"
+                    type="primary"
+                    @click="setEditingUser(scope.row)"></el-button>
+                  <el-button
+                    circle
+                    icon="el-icon-delete"
+                    size="mini"
+                    title="删除"
+                    type="danger"
+                    @click="deleteSysUser(scope.row)"></el-button>
+                </div>
+                <el-tag
+                  closable
+                  v-else
+                  class="defaultCursor"
+                  size="mini"
+                  type="danger"
+                  @close="undeleteSysUser(scope.row)">
+                  已删除
+                </el-tag>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="项目角色" name="project">项目角色</el-tab-pane>
+      </el-tabs>
       <!-- 添加成员角色 -->
       <el-dialog title="添加成员"
         :visible.sync="adding"
@@ -153,6 +159,7 @@ export default {
   },
   data () {
     return {
+      activeTab: 'sys',
       roles: [
         {
           name: '菜鸡a',
