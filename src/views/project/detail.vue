@@ -18,9 +18,19 @@ export default {
   },
   data () {
     return {
+      project: {
+        id: 1,
+        name: '项目1'
+      }
     }
   },
+  created () {
+    this.init()
+  },
   methods: {
+    init () {
+      document.title = `项目详情-${this.project.name}`
+    }
   }
 }
 </script>
