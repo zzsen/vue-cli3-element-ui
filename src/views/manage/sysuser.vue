@@ -2,7 +2,7 @@
   <div class="sysuser">
     <el-card class="box-card" style="position: relative;">
       <el-button
-        style="padding: 3px 0;position: absolute;right: 20px;"
+        style="padding: 3px 0;position: absolute;right: 20px;z-index:1;"
         type="text"
         v-if="activeTab==='sys'"
         @click="setAddingUser">
@@ -69,7 +69,6 @@
                 <el-tag
                   closable
                   v-else
-                  class="defaultCursor"
                   size="mini"
                   type="danger"
                   @close="undeleteSysUser(scope.row)">
@@ -79,7 +78,142 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="项目角色" name="project">项目角色</el-tab-pane>
+        <el-tab-pane label="项目角色-主管" name="master">
+          <el-collapse accordion>
+            <el-collapse-item
+              v-for="master in masters"
+              :key="master.id">
+              <template slot="title">
+                <span style="float:left;">
+                  {{master.name}}
+                </span>
+              </template>
+              <el-table
+                stripe
+                align="left"
+                max-height="300"
+                style="width: 100%"
+                :data="master.projects">
+                <el-table-column
+                  fixed
+                  label="项目名"
+                  min-width="120">
+                  <template slot-scope="scope">
+                    <span
+                      class="link"
+                      style="cursor:pointer"
+                      @click="viewProjectDetail(scope.row.id)">
+                      {{scope.row.name}}
+                    </span>
+                    <el-tag
+                      size="mini"
+                      type="danger"
+                      v-if="scope.row.isDelete">
+                      已删除
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="状态"
+                  min-width="120"
+                  prop="statusName">
+                </el-table-column>
+                <el-table-column
+                  label="描述"
+                  min-width="300"
+                  prop="description">
+                </el-table-column>
+                <el-table-column
+                  label="创建人"
+                  min-width="120"
+                  prop="description">
+                  <template slot-scope="scope">
+                    {{scope.row.creator.name}}
+                    <el-tag
+                      size="mini"
+                      type="danger"
+                      v-if="scope.row.creator.state!==1">
+                      已离职
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="创建时间"
+                  min-width="120"
+                  prop="createTime">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+        </el-tab-pane>
+        <el-tab-pane label="项目角色-负责人" name="principal">
+          <el-collapse accordion>
+            <el-collapse-item
+              v-for="principal in principals"
+              :key="principal.id">
+              <template slot="title">
+                <span style="float:left;">
+                  {{principal.name}}
+                </span>
+              </template>
+              <el-table
+                stripe
+                align="left"
+                max-height="300"
+                style="width: 100%"
+                :data="principal.projects">
+                <el-table-column
+                  fixed
+                  label="项目名"
+                  min-width="120">
+                  <template slot-scope="scope">
+                    <span
+                      class="link"
+                      style="cursor:pointer"
+                      @click="viewProjectDetail(scope.row.id)">
+                      {{scope.row.name}}
+                    </span>
+                    <el-tag
+                      size="mini"
+                      type="danger"
+                      v-if="scope.row.isDelete">
+                      已删除
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="状态"
+                  min-width="120"
+                  prop="statusName">
+                </el-table-column>
+                <el-table-column
+                  label="描述"
+                  min-width="300"
+                  prop="description">
+                </el-table-column>
+                <el-table-column
+                  label="创建人"
+                  min-width="120"
+                  prop="description">
+                  <template slot-scope="scope">
+                    {{scope.row.creator.name}}
+                    <el-tag
+                      size="mini"
+                      type="danger"
+                      v-if="scope.row.creator.state!==1">
+                      已离职
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="创建时间"
+                  min-width="120"
+                  prop="createTime">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+        </el-tab-pane>
       </el-tabs>
       <!-- 添加成员角色 -->
       <el-dialog title="添加成员"
@@ -213,6 +347,138 @@ export default {
           createInfo: '用户a于2018年12月12日添加用户a的管理炒鸡管理员角色'
         }
       ],
+      masters: [
+        {
+          id: 1,
+          name: '用户1',
+          projects: [
+            {
+              id: 1,
+              name: '项目1',
+              statusName: '正常',
+              isDelete: false,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 1,
+                name: '用户1',
+                state: 1
+              },
+              createTime: '2018-08-08'
+            },
+            {
+              id: 2,
+              name: '项目2',
+              statusName: '正常',
+              isDelete: true,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 2,
+                name: '用户2',
+                state: 2
+              },
+              createTime: '2018-08-08'
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: '用户2',
+          projects: [
+            {
+              id: 1,
+              name: '项目1',
+              statusName: '正常',
+              isDelete: false,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 1,
+                name: '用户1',
+                state: 1
+              },
+              createTime: '2018-08-08'
+            },
+            {
+              id: 2,
+              name: '项目2',
+              statusName: '正常',
+              isDelete: true,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 2,
+                name: '用户2',
+                state: 2
+              },
+              createTime: '2018-08-08'
+            }
+          ]
+        }
+      ],
+      principals: [
+        {
+          id: 1,
+          name: '用户1',
+          projects: [
+            {
+              id: 1,
+              name: '项目1',
+              statusName: '正常',
+              isDelete: true,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 1,
+                name: '用户1',
+                state: 1
+              },
+              createTime: '2018-08-08'
+            },
+            {
+              id: 2,
+              name: '项目2',
+              statusName: '正常',
+              isDelete: false,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 2,
+                name: '用户2',
+                state: 2
+              },
+              createTime: '2018-08-08'
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: '用户2',
+          projects: [
+            {
+              id: 1,
+              name: '项目1',
+              statusName: '正常',
+              isDelete: true,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 1,
+                name: '用户1',
+                state: 1
+              },
+              createTime: '2018-08-08'
+            },
+            {
+              id: 2,
+              name: '项目2',
+              statusName: '正常',
+              isDelete: false,
+              description: '正常正常正常正常正常',
+              creator: {
+                id: 2,
+                name: '用户2',
+                state: 2
+              },
+              createTime: '2018-08-08'
+            }
+          ]
+        }
+      ],
       searchingUser: false,
       userArray: [],
       userToAdd: [],
@@ -277,6 +543,10 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    viewProjectDetail (id) {
+      this.$store.dispatch('SetBackUrl', window.location.href)
+      this.$router.push({ name: 'ProjectDetail', params: { id } })
     }
   }
 }
@@ -288,8 +558,5 @@ export default {
 }
 .el-select{
   width: 100%;
-}
-.el-form-item__content>.el-autocomplete{
-  width: 100%
 }
 </style>

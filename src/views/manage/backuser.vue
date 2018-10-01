@@ -68,7 +68,6 @@
             </div>
             <el-tag
               closable
-              class="defaultCursor"
               size="mini"
               type="danger"
               v-else
