@@ -115,9 +115,6 @@ li.el-submenu>.el-submenu__title{
 .defaultCursor{
   cursor: default;
 }
-.pointerCursor{
-  cursor: pointer;
-}
 .el-card{
   width: 100%;
 }
@@ -128,5 +125,8 @@ li.el-submenu>.el-submenu__title{
   position: absolute;
   right: 0;
   top: 20px;
+}
+.el-tag{
+  cursor: default;
 }
 </style>
