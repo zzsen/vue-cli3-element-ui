@@ -9,6 +9,17 @@
 export default {
   name: 'home',
   components: {
+  },
+  created () {
+    this.init()
+  },
+  methods: {
+    init () {
+      if (this.$route.path === '/') {
+        const name = 'ProjectList'
+        this.$router.push({ name })
+      }
+    }
   }
 }
 </script>
