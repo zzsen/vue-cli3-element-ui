@@ -4,7 +4,7 @@
     <el-menu
       class="el-menu-demo header-menu"
       mode="horizontal"
-      :default-active="activeIndex"
+      :default-active="$route.path"
       :router="true"
       @select="handleSelect">
       <div
@@ -45,7 +45,6 @@ export default {
   props: ['menus'],
   data () {
     return {
-      activeIndex: '/'
     }
   },
   computed: {
