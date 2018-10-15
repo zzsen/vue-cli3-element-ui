@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div class="clearfix" slot="header">
         需求模板列表
-        <el-button style="float: right; padding: 3px 0" type="text" @click="adding = true">
+        <el-button style="float: right; padding: 3px 0" type="text" @click="createDemand">
           <i class="el-icon-circle-plus-outline"/>新建需求模板
         </el-button>
       </div>
@@ -56,7 +56,7 @@
       </el-table>
       <el-dialog title="添加需求模板"
         :visible.sync="adding"
-        width="500px">
+        width="800px">
         <el-form ref="newDemand" :model="newDemand" :rules="demandRules">
           <el-form-item label="需求名称" label-width="100px" prop="name">
             <el-input
@@ -83,6 +83,9 @@
                 :value="user.id"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="需求描述" label-width="100px">
+            <div id="description"></div>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="closeDialog">取 消</el-button>
@@ -94,7 +97,10 @@
 </template>
 
 <script>
+import Editor from '@/assets/tuieditor/tuieditor.config.js'
 import draggable from 'vuedraggable'
+
+let contentEditor = null
 
 export default {
   name: 'demandList',
@@ -103,6 +109,9 @@ export default {
   },
   data () {
     return {
+      editorAttr: {
+        height: '200px'
+      },
       demandRules: {
         name: [
           { required: true, message: '请输入需求名称', trigger: 'blur' }
@@ -193,6 +202,14 @@ export default {
     }
   },
   methods: {
+    createDemand () {
+      this.adding = true
+      if (!contentEditor) {
+        this.$nextTick(() => {
+          contentEditor = Editor('#description', this.editorAttr)
+        })
+      }
+    },
     searchUser () {
       this.userArray = this.users
       this.searchingUser = false
