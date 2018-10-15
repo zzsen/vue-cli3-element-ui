@@ -102,6 +102,7 @@ export default {
       height: 100% !important;
       line-height: 60px !important;
       min-width: 80px;
+      text-align: center;
     }
   }
 }
