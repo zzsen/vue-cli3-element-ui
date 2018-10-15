@@ -242,7 +242,7 @@
             </el-card>
           </div>
         </el-form-item>
-        <el-form-item>
+        <el-form-item style="text-align:center;">
           <el-button @click="$router.push({ name: 'ProjectList' })">取消</el-button>
           <el-button type="primary" @click="createProject">创建</el-button>
         </el-form-item>
