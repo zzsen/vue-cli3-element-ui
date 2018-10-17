@@ -11,7 +11,8 @@
         align="left"
         height="250"
         style="width: 100%"
-        :data="demands">
+        :data="demands"
+        @row-click="viewDetail">
         <el-table-column
           label="模板名称"
           min-width="180"
@@ -93,22 +94,25 @@
         </div>
       </el-dialog>
     </el-card>
+    <side-detail :id="demandId" :type="demandType" @close="handleClose"></side-detail>
   </div>
 </template>
 
 <script>
+import SideDetail from '@/components/SideDetail'
 import Editor from '@/assets/tuieditor/tuieditor.config.js'
-import draggable from 'vuedraggable'
 
 let contentEditor = null
 
 export default {
   name: 'demandList',
   components: {
-    draggable
+    SideDetail
   },
   data () {
     return {
+      demandId: 0,
+      demandType: 1,
       editorAttr: {
         height: '200px'
       },
@@ -230,6 +234,12 @@ export default {
         createTime: '2018-08-08'
       }
       this.adding = false
+    },
+    viewDetail (row, event, column) {
+      this.demandId = row.id
+    },
+    handleClose () {
+      this.demandId = 0
     }
   }
 }
