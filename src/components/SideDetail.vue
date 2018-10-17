@@ -7,6 +7,19 @@
       <div slot="head">
         <div class="detail-head">
           <span class="detail-head-title">头部标题</span>
+          <ul class="detail-menu">
+            <li title="分享"></li>
+            <li title="删除">
+              <el-popover
+                placement="bottom"
+                title="标题"
+                width="200"
+                trigger="click"
+                content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                <i class="el-icon-more" slot="reference"></i>
+              </el-popover>
+            </li>
+          </ul>
         </div>
       </div>
     </layer>
@@ -64,6 +77,23 @@ export default {
     margin-bottom: 15px;
     &--center{
       text-align: center;
+    }
+  }
+  .detail-menu{
+    float: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    li {
+      display: inline-block;
+    }
+    i {
+      color: #777;
+      cursor: pointer;
+      margin-right: 15px;
+      font-size: 14px;
+    }
+    i:hover{
+      color: #21a0ff;
     }
   }
 </style>
