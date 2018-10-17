@@ -13,12 +13,22 @@
             </li>
             <li title="删除">
               <el-popover
+                width="100"
                 placement="bottom"
-                title="标题"
-                width="200"
-                trigger="click"
-                content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                trigger="click">
                 <i class="el-icon-more" slot="reference"></i>
+                <div>
+                  <div>
+                    <el-button type="text">
+                      <i class="el-icon-share"></i>文字按钮
+                    </el-button>
+                  </div>
+                  <div>
+                    <el-button type="text">
+                      <i class="el-icon-share"></i>文字按钮
+                    </el-button>
+                  </div>
+                </div>
               </el-popover>
             </li>
           </ul>
