@@ -8,7 +8,9 @@
         <div class="detail-head">
           <span class="detail-head-title">头部标题</span>
           <ul class="detail-menu">
-            <li title="分享"></li>
+            <li title="分享">
+              <i class="el-icon-share"></i>
+            </li>
             <li title="删除">
               <el-popover
                 placement="bottom"
