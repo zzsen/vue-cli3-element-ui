@@ -6,7 +6,12 @@
       @close="$emit('close')">
       <div slot="head">
         <div class="detail-head">
-          <span class="detail-head-title">头部标题</span>
+          <span class="detail-head-title" v-show="!editingName" @click="editName('edit')">{{data.name}}</span>
+          <input
+            class="edit-input"
+            v-model="data.name"
+            v-show="editingName"
+            @blur="editName('commit')"/>
           <ul class="detail-menu">
             <li title="分享">
               <i class="el-icon-share"></i>
@@ -34,6 +39,20 @@
           </ul>
         </div>
       </div>
+      <div slot="body">
+        <div class="detail-body">
+        </div>
+        <div class="detail-body">
+        </div>
+        <div class="detail-body">
+        </div>
+        <div class="detail-body">
+        </div>
+        <div class="detail-body">
+        </div>
+        <div class="detail-body">
+        </div>
+      </div>
     </layer>
   </div>
 </template>
@@ -51,7 +70,11 @@ export default {
   },
   data () {
     return {
-      show: false
+      show: false,
+      editingName: false,
+      data: {
+        name: '头部标题'
+      }
     }
   },
   watch: {
@@ -70,6 +93,13 @@ export default {
   methods: {
     init () {
       this.show = !!(this.id && this.type)
+    },
+    editName (type) {
+      if (type === 'edit') {
+        this.editingName = true
+      } else {
+        this.editingName = false
+      }
     }
   }
 }
@@ -90,22 +120,31 @@ export default {
     &--center{
       text-align: center;
     }
+    .detail-menu{
+      float: right;
+      margin: 0 !important;
+      padding: 0 !important;
+      li {
+        display: inline-block;
+      }
+      i {
+        color: #777;
+        cursor: pointer;
+        margin-right: 15px;
+        font-size: 14px;
+      }
+      i:hover{
+        color: #21a0ff;
+      }
+    }
   }
-  .detail-menu{
-    float: right;
-    margin: 0 !important;
-    padding: 0 !important;
-    li {
-      display: inline-block;
-    }
-    i {
-      color: #777;
-      cursor: pointer;
-      margin-right: 15px;
-      font-size: 14px;
-    }
-    i:hover{
-      color: #21a0ff;
-    }
+  .detail-body {
+    width: 95%;
+    height: 200px;
+    background-color: #21a0ff;
+    margin: 10px auto
+  }
+  .edit-input{
+    border: 0;
   }
 </style>
