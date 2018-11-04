@@ -25,6 +25,8 @@ import BackUser from './views/manage/backuser'
 import Log from './views/log/index'
 import System from './views/log/system'
 
+import CollapseCard from './components/CollapseCard'
+
 Vue.use(Router)
 
 export default new Router({
@@ -153,6 +155,14 @@ export default new Router({
           component: System,
           meta: {
             title: '系统日志'
+          }
+        },
+        {
+          path: 'card',
+          name: 'card',
+          component: CollapseCard,
+          meta: {
+            title: 'card'
           }
         }
       ]
