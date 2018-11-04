@@ -20,9 +20,11 @@
           label="姓名"
           width="180">
           <template slot-scope="scope">
-            <i class="mdi mdi-folder" v-if="scope.row.isDir"/>
-            <i class="mdi mdi-file" v-else/>
-            {{scope.row.name}}
+            <div class="file" @mouseover="mouseover($event)" @mouseout="mouseout($event)">
+              <i class="mdi mdi-folder" v-if="scope.row.isDir"/>
+              <i class="mdi mdi-file" v-else/>
+              {{scope.row.name}}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -82,6 +84,26 @@ export default {
     }
   },
   methods: {
+    mouseover (event) {
+      if (event.srcElement.className === 'file') {
+        let children = event.srcElement.children[0]
+        if (children.className === 'mdi mdi-folder') {
+          event.srcElement.children[0].className = 'mdi mdi-folder-open'
+        } else if (children.className === 'mdi mdi-file') {
+          event.srcElement.children[0].className = 'mdi mdi-file-document'
+        }
+      }
+    },
+    mouseout (event) {
+      if (event.srcElement.className === 'file') {
+        let children = event.srcElement.children[0]
+        if (children.className === 'mdi mdi-folder-open') {
+          event.srcElement.children[0].className = 'mdi mdi-folder'
+        } else if (children.className === 'mdi mdi-file-document') {
+          event.srcElement.children[0].className = 'mdi mdi-file'
+        }
+      }
+    }
   }
 }
 </script>
