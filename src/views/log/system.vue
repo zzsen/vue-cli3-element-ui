@@ -38,14 +38,18 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <log-content>
+    </log-content>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import LogContent from '@/components/LogContent'
 export default {
   name: 'system',
   components: {
+    LogContent
   },
   computed: {
     ...mapGetters([ 'activeUser' ])
@@ -111,5 +115,9 @@ export default {
 <style lang='scss'>
 .el-breadcrumb{
   margin-top:10px;
+}
+.mdi-folder,.mdi-folder-open,
+.mdi-file,.mdi-file-document{
+  color: coral;
 }
 </style>
