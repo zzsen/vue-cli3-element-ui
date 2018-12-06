@@ -6,12 +6,12 @@
       @close="$emit('close')">
       <div slot="head">
         <div class="detail-head">
-          <span class="detail-head-title" v-show="!editingName" @click="editName('edit')">{{data.name}}</span>
+          <span class="detail-name" v-show="!editingName" @click="editName('edit')">{{data.name}}</span>
           <input
-            class="edit-input"
+            class="detail-name detail-name--editable"
             v-model="data.name"
             v-show="editingName"
-            @blur="editName('commit')"/>
+            @blur.stop.prevent="editName('commit')"/>
           <ul class="detail-menu">
             <li title="分享">
               <i class="el-icon-share"></i>
@@ -40,16 +40,6 @@
         </div>
       </div>
       <div slot="body">
-        <div class="detail-body">
-        </div>
-        <div class="detail-body">
-        </div>
-        <div class="detail-body">
-        </div>
-        <div class="detail-body">
-        </div>
-        <div class="detail-body">
-        </div>
         <div class="detail-body">
         </div>
       </div>
@@ -120,31 +110,54 @@ export default {
     &--center{
       text-align: center;
     }
-    .detail-menu{
-      float: right;
-      margin: 0 !important;
-      padding: 0 !important;
-      li {
-        display: inline-block;
-      }
-      i {
-        color: #777;
-        cursor: pointer;
-        margin-right: 15px;
-        font-size: 14px;
-      }
-      i:hover{
-        color: #21a0ff;
-      }
+  }
+  .detail-menu{
+    float: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    li {
+      display: inline-block;
+    }
+    i {
+      color: #777;
+      cursor: pointer;
+      margin-right: 15px;
+      font-size: 14px;
+    }
+    i:hover{
+      color: #21a0ff;
     }
   }
   .detail-body {
     width: 95%;
     height: 200px;
     background-color: #21a0ff;
-    margin: 10px auto
+    border-radius: 5px;
+    margin: 10px auto;
   }
-  .edit-input{
-    border: 0;
+  .detail-name{
+    cursor: pointer;
+    padding: 10px 10px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    font-weight: bold;
+    transition: color .4s ease;
+    &--editable{
+      margin: 0;
+      padding: 0 10px;
+      position: relative;
+      width: 500px;
+      outline: none;
+      overflow: hidden;
+      border: 0;
+      font-size: 14px;
+      &:hover{
+        color: #444;
+      }
+    }
   }
 </style>

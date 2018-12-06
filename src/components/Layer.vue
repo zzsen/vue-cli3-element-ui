@@ -58,7 +58,7 @@ export default {
     bottom: 0;
     width: auto;
     z-index: 99;
-    height: 100vh;
+    height: 100%;
     background-color: #f5f5f5;
     overflow-y: auto;
     .side-close{
