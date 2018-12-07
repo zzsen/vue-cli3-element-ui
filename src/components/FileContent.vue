@@ -54,7 +54,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 .file-content {
   position: relative;
   overflow: hidden;
@@ -69,9 +69,14 @@ export default {
   z-index: 99;
   height: 800px;
   background-color: #f5f5f5;
-  overflow-y: auto;
   .el-card__header {
     position: relative;
+  }
+  .el-card__body {
+    overflow-y: auto;
+    // el-card__header的height为57px , padding-top和padding-bottom都是20px
+    height: calc(100% - 57px - 40px);
+    padding: 20px;
   }
 }
 .fileContent-enter-active,
