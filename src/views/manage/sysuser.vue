@@ -4,215 +4,31 @@
       <el-button
         style="padding: 3px 0;position: absolute;right: 20px;z-index:1;"
         type="text"
-        v-if="activeTab==='sys'"
+        v-if="activeTab.indexOf('sys')>=0"
         @click="setAddingUser">
         <i class="el-icon-circle-plus-outline"/>添加成员
       </el-button>
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="系统角色" name="sys">
-          <el-table
-            stripe
-            align="left"
-            max-height="300"
-            style="width: 100%"
-            :data="user">
-            <el-table-column
-              label="姓名"
-              min-width="180">
-              <template slot-scope="scope">
-                <span class="defaultCursor">
-                  {{scope.row.name}}
-                  <el-tag
-                    size="mini"
-                    type="default"
-                    v-if="activeUser.id===scope.row.id">
-                    it's me
-                  </el-tag>
-                  <el-tag
-                    size="mini"
-                    type="danger"
-                    v-if="scope.row.status!=='正常'">
-                    {{scope.row.status}}
-                  </el-tag>
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="成员角色"
-              min-width="180">
-              <template slot-scope="scope">
-                <el-popover
-                  placement="left-start"
-                  trigger="hover"
-                  width="200"
-                  :content="scope.row.createInfo">
-                  <span class="defaultCursor" slot="reference">
-                    {{scope.row.roleName}}
-                  </span>
-                </el-popover>
-                <div style="display:initial;margin-left:10px" v-if="!scope.row.isdelete">
-                  <el-button
-                    circle
-                    icon="mdi mdi-account-edit"
-                    size="mini"
-                    title="编辑"
-                    type="primary"
-                    @click="setEditingUser(scope.row)"></el-button>
-                  <el-button
-                    circle
-                    icon="el-icon-delete"
-                    size="mini"
-                    title="删除"
-                    type="danger"
-                    @click="deleteSysUser(scope.row)"></el-button>
-                </div>
-                <el-tag
-                  closable
-                  v-else
-                  size="mini"
-                  type="danger"
-                  @close="undeleteSysUser(scope.row)">
-                  已删除
-                </el-tag>
-              </template>
-            </el-table-column>
-          </el-table>
+        <el-tab-pane
+          v-for="projectType in projectTypes"
+          :key="projectType.value"
+          :label="`系统角色${projectType.name}`"
+          :name="`sys${projectType.name}`">
+          <system-role
+            :users="users"
+            @edit="setEditingUser"
+            @delete="deleteSysUser"
+            @undelete="undeleteSysUser">
+          </system-role>
         </el-tab-pane>
-        <el-tab-pane label="项目角色-主管" name="master">
-          <el-collapse accordion>
-            <el-collapse-item
-              v-for="master in masters"
-              :key="master.id">
-              <template slot="title">
-                <span style="float:left;">
-                  {{master.name}}
-                </span>
-              </template>
-              <el-table
-                stripe
-                align="left"
-                max-height="300"
-                style="width: 100%"
-                :data="master.projects">
-                <el-table-column
-                  fixed
-                  label="项目名"
-                  min-width="120">
-                  <template slot-scope="scope">
-                    <span
-                      class="link"
-                      style="cursor:pointer"
-                      @click="viewProjectDetail(scope.row.id)">
-                      {{scope.row.name}}
-                    </span>
-                    <el-tag
-                      size="mini"
-                      type="danger"
-                      v-if="scope.row.isDelete">
-                      已删除
-                    </el-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="状态"
-                  min-width="120"
-                  prop="statusName">
-                </el-table-column>
-                <el-table-column
-                  label="描述"
-                  min-width="300"
-                  prop="description">
-                </el-table-column>
-                <el-table-column
-                  label="创建人"
-                  min-width="120"
-                  prop="description">
-                  <template slot-scope="scope">
-                    {{scope.row.creator.name}}
-                    <el-tag
-                      size="mini"
-                      type="danger"
-                      v-if="scope.row.creator.state!==1">
-                      已离职
-                    </el-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="创建时间"
-                  min-width="120"
-                  prop="createTime">
-                </el-table-column>
-              </el-table>
-            </el-collapse-item>
-          </el-collapse>
-        </el-tab-pane>
-        <el-tab-pane label="项目角色-负责人" name="principal">
-          <el-collapse accordion>
-            <el-collapse-item
-              v-for="principal in principals"
-              :key="principal.id">
-              <template slot="title">
-                <span style="float:left;">
-                  {{principal.name}}
-                </span>
-              </template>
-              <el-table
-                stripe
-                align="left"
-                max-height="300"
-                style="width: 100%"
-                :data="principal.projects">
-                <el-table-column
-                  fixed
-                  label="项目名"
-                  min-width="120">
-                  <template slot-scope="scope">
-                    <span
-                      class="link"
-                      style="cursor:pointer"
-                      @click="viewProjectDetail(scope.row.id)">
-                      {{scope.row.name}}
-                    </span>
-                    <el-tag
-                      size="mini"
-                      type="danger"
-                      v-if="scope.row.isDelete">
-                      已删除
-                    </el-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="状态"
-                  min-width="120"
-                  prop="statusName">
-                </el-table-column>
-                <el-table-column
-                  label="描述"
-                  min-width="300"
-                  prop="description">
-                </el-table-column>
-                <el-table-column
-                  label="创建人"
-                  min-width="120"
-                  prop="description">
-                  <template slot-scope="scope">
-                    {{scope.row.creator.name}}
-                    <el-tag
-                      size="mini"
-                      type="danger"
-                      v-if="scope.row.creator.state!==1">
-                      已离职
-                    </el-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="创建时间"
-                  min-width="120"
-                  prop="createTime">
-                </el-table-column>
-              </el-table>
-            </el-collapse-item>
-          </el-collapse>
+        <el-tab-pane
+          v-for="projectRole in projectRoles"
+          :key="projectRole.value"
+          :label="`项目角色${projectRole.name}`"
+          :name="`master${projectRole.name}`">
+          <project-role
+            :users="masters">
+          </project-role>
         </el-tab-pane>
       </el-tabs>
       <!-- 添加成员角色 -->
@@ -284,16 +100,48 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import projectRole from '@/components/projectRole'
+import systemRole from '@/components/systemRole'
 export default {
   name: 'sysuser',
   components: {
+    systemRole,
+    projectRole
   },
   computed: {
     ...mapGetters([ 'activeUser' ])
   },
   data () {
+    const projectTypes = [
+      {
+        name: 'a',
+        value: 'a'
+      },
+      {
+        name: 'b',
+        value: 'b'
+      },
+      {
+        name: 'c',
+        value: 'c'
+      }
+    ]
+    const projectRoles = [
+      {
+        name: 'd',
+        value: 'd'
+      },
+      {
+        name: 'e',
+        value: 'e'
+      },
+      {
+        name: 'f',
+        value: 'f'
+      }
+    ]
     return {
-      activeTab: 'sys',
+      activeTab: `sys${projectTypes[0].name}`,
       roles: [
         {
           name: '菜鸡a',
@@ -312,7 +160,7 @@ export default {
           value: 4
         }
       ],
-      user: [
+      users: [
         {
           id: 1,
           name: '用户a',
@@ -413,72 +261,8 @@ export default {
           ]
         }
       ],
-      principals: [
-        {
-          id: 1,
-          name: '用户1',
-          projects: [
-            {
-              id: 1,
-              name: '项目1',
-              statusName: '正常',
-              isDelete: true,
-              description: '正常正常正常正常正常',
-              creator: {
-                id: 1,
-                name: '用户1',
-                state: 1
-              },
-              createTime: '2018-08-08'
-            },
-            {
-              id: 2,
-              name: '项目2',
-              statusName: '正常',
-              isDelete: false,
-              description: '正常正常正常正常正常',
-              creator: {
-                id: 2,
-                name: '用户2',
-                state: 2
-              },
-              createTime: '2018-08-08'
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: '用户2',
-          projects: [
-            {
-              id: 1,
-              name: '项目1',
-              statusName: '正常',
-              isDelete: true,
-              description: '正常正常正常正常正常',
-              creator: {
-                id: 1,
-                name: '用户1',
-                state: 1
-              },
-              createTime: '2018-08-08'
-            },
-            {
-              id: 2,
-              name: '项目2',
-              statusName: '正常',
-              isDelete: false,
-              description: '正常正常正常正常正常',
-              creator: {
-                id: 2,
-                name: '用户2',
-                state: 2
-              },
-              createTime: '2018-08-08'
-            }
-          ]
-        }
-      ],
+      projectTypes,
+      projectRoles,
       searchingUser: false,
       userArray: [],
       userToAdd: [],
