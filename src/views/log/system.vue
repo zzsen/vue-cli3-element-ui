@@ -1,6 +1,7 @@
 <template>
   <div class="system">
     <file-list
+      :getFile="getFile"
       :path="path"
       :title="title"></file-list>
   </div>
@@ -18,7 +19,10 @@ export default {
   data () {
     return {
       title: '系统日志',
-      path: ''
+      path: '',
+      getFile: function () {
+        console.log('getFile')
+      }
     }
   },
   watch: {

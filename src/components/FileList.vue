@@ -8,7 +8,7 @@
         <el-breadcrumb-item
           v-for="breadcrumb in breadcrumbs"
           :key="breadcrumb.path"
-          :to="{ path: '/' }">
+          :to="{ query: { path : breadcrumb.path} }">
           {{breadcrumb.name}}
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -81,6 +81,8 @@ export default {
     FileContent
   },
   props: {
+    getFile: [ Function ],
+    path: { type: String, default: '' },
     title: { type: String, default: 'log' }
   },
   computed: {
@@ -148,6 +150,11 @@ export default {
           path: '路径3'
         }
       ]
+    }
+  },
+  watch: {
+    $route: function () {
+      this.init()
     }
   },
   methods: {
