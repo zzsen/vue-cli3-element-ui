@@ -70,16 +70,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
   name: 'projectRole',
-  components: {
-  },
   props: {
     users: { type: Array, default: () => { return [] } }
-  },
-  computed: {
-    ...mapGetters([ 'activeUser' ])
   },
   data () {
     return {
