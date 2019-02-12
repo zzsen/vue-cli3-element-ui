@@ -30,6 +30,12 @@
             :users="masters">
           </project-role>
         </el-tab-pane>
+        <el-tab-pane
+          label="可选择"
+          name="可选择">
+          <role-to-choose>
+          </role-to-choose>
+        </el-tab-pane>
       </el-tabs>
       <!-- 添加成员角色 -->
       <el-dialog title="添加成员"
@@ -102,11 +108,13 @@
 import { mapGetters } from 'vuex'
 import projectRole from '@/components/projectRole'
 import systemRole from '@/components/systemRole'
+import roleToChoose from '@/components/roleToChoose'
 export default {
   name: 'sysuser',
   components: {
     systemRole,
-    projectRole
+    projectRole,
+    roleToChoose
   },
   computed: {
     ...mapGetters([ 'activeUser' ])
@@ -141,7 +149,7 @@ export default {
       }
     ]
     return {
-      activeTab: `sys${projectTypes[0].name}`,
+      activeTab: '可选择' || `sys${projectTypes[0].name}`,
       roles: [
         {
           name: '菜鸡a',
