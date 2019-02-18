@@ -106,9 +106,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import projectRole from '@/components/projectRole'
-import systemRole from '@/components/systemRole'
-import roleToChoose from '@/components/roleToChoose'
+import projectRole from '@/views/manage/components/projectRole'
+import systemRole from '@/views/manage/components/systemRole'
+import roleToChoose from '@/views/manage/components/roleToChoose'
 export default {
   name: 'sysuser',
   components: {

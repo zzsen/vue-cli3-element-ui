@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import userRole from '@/components/userRole'
+import userRole from '@/views/manage/components/userRole'
 export default {
   name: 'roleToChoose',
   components: {
