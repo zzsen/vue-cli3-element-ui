@@ -3,6 +3,9 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         项目列表
+        <el-button style="padding: 3px 0;right: 20px;" type="text" title="项目排序" @click="() => { sorting = true }">
+          <i class="mdi mdi-sort"/>
+        </el-button>
         <router-link to="/project/create">
           <el-button style="float: right; padding: 3px 0" type="text">
             <i class="el-icon-circle-plus-outline"/>新建项目
@@ -108,19 +111,75 @@
         :total="1000">
       </el-pagination>
     </el-card>
+    <el-dialog title="项目排序" :visible.sync="sorting">
+      <div>
+        <draggable :list="datas" :options="dragOption" @end="handleDrag">
+          <div class="drag-btn"
+            v-for="data in datas"
+            :key="data.value">
+            {{data.name}}
+          </div>
+        </draggable>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="sorting = false">取 消</el-button>
+        <el-button type="primary" @click="sorting = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 export default {
   name: 'projectTable',
   props: {
     type: { type: Number, default: 0 }
   },
   components: {
+    draggable
   },
   data () {
     return {
+      sorting: false,
+      datas: [
+        {
+          name: 1,
+          value: 1
+        }, {
+          name: 2,
+          value: 2
+        }, {
+          name: 3,
+          value: 3
+        }, {
+          name: 4,
+          value: 4
+        }, {
+          name: 5,
+          value: 5
+        }, {
+          name: 6,
+          value: 6
+        }, {
+          name: 7,
+          value: 7
+        }, {
+          name: 8,
+          value: 8
+        }, {
+          name: 9,
+          value: 9
+        }, {
+          name: 10,
+          value: 10
+        }
+      ],
+      dragOption: {
+        animation: 100,
+        forceFallback: true,
+        fallbackOnBody: true
+      },
       projectList: [
         {
           id: 'a',
@@ -144,6 +203,12 @@ export default {
           createTime: '2018-08-10'
         }
       ]
+    }
+  },
+  mounted () {
+    document.body.ondrop = function (event) {
+      event.preventDefault()
+      event.stopPropagation()
     }
   },
   methods: {
@@ -190,6 +255,10 @@ export default {
     viewDetail (id) {
       this.$store.dispatch('SetBackUrl', window.location.href)
       this.$router.push({ name: 'ProjectDetail', params: { id } })
+    },
+    handleDrag (e) {
+      if (e.newIndex === e.oldIndex) return
+      console.log((this.datas[e.newIndex - 1] && this.datas[e.newIndex - 1].value) || -1)
     }
   }
 }
