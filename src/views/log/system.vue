@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import FileList from '@/components/FileList'
+import FileList from '@/views/log/components/FileList'
 export default {
   name: 'system',
   components: {

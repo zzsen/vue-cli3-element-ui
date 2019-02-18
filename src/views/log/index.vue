@@ -1,5 +1,5 @@
 <template>
-  <div class="manage">
+  <div class="log">
     <router-view/>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: 'manage',
+  name: 'log',
   components: {
   }
 }
