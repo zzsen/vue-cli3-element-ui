@@ -86,12 +86,9 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-
 export default {
   name: 'eventForm',
   components: {
-    draggable
   },
   data () {
     return {
@@ -200,7 +197,7 @@ export default {
       }
     },
     deleteEvent (event) {
-      let deleteContent = `是否确定把事件 ${event.name} 从该项目模板中删除?`
+      const deleteContent = `是否确定把事件 ${event.name} 从该项目模板中删除?`
       this.$confirm(deleteContent, '删除事件', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

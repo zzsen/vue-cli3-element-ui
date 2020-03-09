@@ -26,12 +26,12 @@ export default {
     }
   },
   mounted () {
-    let userinfo = {
+    const userinfo = {
       id: 3,
       name: '用户c',
       role: 3
     }
-    let menus = [
+    const menus = [
       {
         name: '项目',
         link: '/project/list'

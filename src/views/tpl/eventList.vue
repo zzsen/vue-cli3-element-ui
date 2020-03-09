@@ -104,12 +104,9 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-
 export default {
   name: 'eventList',
   components: {
-    draggable
   },
   data () {
     return {
@@ -205,7 +202,7 @@ export default {
   },
   methods: {
     deleteEvent (project) {
-      let deleteContent = `是否确定删除项目 ${project.name} ?`
+      const deleteContent = `是否确定删除项目 ${project.name} ?`
       this.$confirm(deleteContent, '删除项目', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -225,7 +222,7 @@ export default {
       })
     },
     undeleteEvent (project) {
-      let deleteContent = `是否确定撤销删除项目 ${project.name} ?`
+      const deleteContent = `是否确定撤销删除项目 ${project.name} ?`
       this.$confirm(deleteContent, '撤销删除项目', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

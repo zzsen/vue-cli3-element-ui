@@ -48,7 +48,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([ 'activeUser' ])
+    ...mapGetters(['activeUser'])
   },
   methods: {
     handleSelect (key, keyPath) {

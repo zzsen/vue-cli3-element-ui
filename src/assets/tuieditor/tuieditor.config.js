@@ -8,7 +8,7 @@ import 'tui-color-picker/dist/tui-color-picker.css'
 import './tuieditor.scss'
 
 const imageUpload = (blob) => {
-  let formData = new FormData()
+  const formData = new FormData()
   formData.append('upfile', blob, `blob${blob.type.split('/')[1]}`)
   formData.append('type', 'ajax')
   return axios.post('/handle/tui-editor.ashx?action=uploadimage', formData)
