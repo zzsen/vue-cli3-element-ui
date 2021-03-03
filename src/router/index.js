@@ -1,31 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from '../views/Home.vue'
 
 // 项目
-import Project from './views/project/index'
-import ProjectList from './views/project/list'
-import ProjectDetail from './views/project/detail'
-import CreateProject from './views/project/create'
+import Project from '../views/project/index'
+import ProjectList from '../views/project/list'
+import ProjectDetail from '../views/project/detail'
+import CreateProject from '../views/project/create'
 
 // 模板
-import Template from './views/tpl/index'
-import ProjectListTemplate from './views/tpl/projectList'
-import ProjectTemplateForm from './views/tpl/projectForm'
-import EventListTemplate from './views/tpl/eventList'
-import EventTemplateForm from './views/tpl/eventForm'
-import DemandListTemplate from './views/tpl/demandList'
+import Template from '../views/tpl/index'
+import ProjectListTemplate from '../views/tpl/projectList'
+import ProjectTemplateForm from '../views/tpl/projectForm'
+import EventListTemplate from '../views/tpl/eventList'
+import EventTemplateForm from '../views/tpl/eventForm'
+import DemandListTemplate from '../views/tpl/demandList'
 
 // 管理
-import Manage from './views/manage/index'
-import SysUser from './views/manage/sysuser'
-import BackUser from './views/manage/backuser'
+import Manage from '../views/manage/index'
+import SysUser from '../views/manage/sysuser'
+import BackUser from '../views/manage/backuser'
 
 // 日志
-import Log from './views/log/index'
-import System from './views/log/system'
+import Log from '../views/log/index'
+import System from '../views/log/system'
 
-import CollapseCard from './components/CollapseCard'
+import CollapseCard from '../components/CollapseCard'
 
 Vue.use(Router)
 
@@ -172,7 +172,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     }
   ]
 })

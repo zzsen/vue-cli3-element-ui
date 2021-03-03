@@ -81,7 +81,7 @@ export default {
     FileContent
   },
   props: {
-    getFile: [ Function ],
+    getFile: [Function],
     path: { type: String, default: '' },
     title: { type: String, default: 'log' }
   },
@@ -169,7 +169,7 @@ export default {
     },
     mouseover (event) {
       if (event.srcElement.className === 'file') {
-        let children = event.srcElement.children[0]
+        const children = event.srcElement.children[0]
         if (children.className === 'mdi mdi-folder') {
           event.srcElement.children[0].className = 'mdi mdi-folder-open'
         } else if (children.className === 'mdi mdi-file') {
@@ -179,7 +179,7 @@ export default {
     },
     mouseout (event) {
       if (event.srcElement.className === 'file') {
-        let children = event.srcElement.children[0]
+        const children = event.srcElement.children[0]
         if (children.className === 'mdi mdi-folder-open') {
           event.srcElement.children[0].className = 'mdi mdi-folder'
         } else if (children.className === 'mdi mdi-file-document') {

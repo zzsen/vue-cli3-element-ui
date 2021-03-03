@@ -80,7 +80,7 @@ export default {
     users: { type: Array, default: () => { return [] } }
   },
   computed: {
-    ...mapGetters([ 'activeUser' ])
+    ...mapGetters(['activeUser'])
   },
   data () {
     return {

@@ -151,7 +151,7 @@ export default {
   components: {
   },
   computed: {
-    ...mapGetters([ 'activeUser' ])
+    ...mapGetters(['activeUser'])
   },
   data () {
     return {
@@ -236,7 +236,7 @@ export default {
       this.userToEdit = userinfo
     },
     deleteSysUser (userinfo) {
-      let deleteContent = `是否确定删除 ${userinfo.id !== this.activeUser.id ? userinfo.name : '自己'} 的 ${userinfo.roleName} 角色?`
+      const deleteContent = `是否确定删除 ${userinfo.id !== this.activeUser.id ? userinfo.name : '自己'} 的 ${userinfo.roleName} 角色?`
       this.$confirm(deleteContent, '删除成员', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -255,7 +255,7 @@ export default {
       })
     },
     undeleteSysUser (userinfo) {
-      let undeleteContent = `是否确定撤销删除 ${userinfo.name} 的 ${userinfo.roleName} 角色?`
+      const undeleteContent = `是否确定撤销删除 ${userinfo.name} 的 ${userinfo.roleName} 角色?`
       this.$confirm(undeleteContent, '撤销删除成员', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

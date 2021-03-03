@@ -52,9 +52,9 @@ export default {
   },
   methods: {
     init () {
-      let checkAll = {}
-      let checkedProjects = {}
-      let isIndeterminate = {}
+      const checkAll = {}
+      const checkedProjects = {}
+      const isIndeterminate = {}
       this.projects.forEach(type => {
         checkAll[type.type] = false
         checkedProjects[type.type] = []
@@ -68,8 +68,8 @@ export default {
       this.isIndeterminate[type] = false
     },
     handleChange (type) {
-      let checkedCount = this.checkedProjects[type].length
-      let projectCount = this.projects.find(t => t.type === type).projects.length || 0
+      const checkedCount = this.checkedProjects[type].length
+      const projectCount = this.projects.find(t => t.type === type).projects.length || 0
       this.checkAll[type] = checkedCount === projectCount
       this.isIndeterminate[type] = checkedCount > 0 && checkedCount < projectCount
     }

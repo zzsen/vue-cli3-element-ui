@@ -109,13 +109,8 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-
 export default {
   name: 'projectList',
-  components: {
-    draggable
-  },
   data () {
     return {
       projects: [
@@ -171,7 +166,7 @@ export default {
       console.log(project.name)
     },
     deleteProject (project) {
-      let deleteContent = `是否确定删除项目 ${project.name} ?`
+      const deleteContent = `是否确定删除项目 ${project.name} ?`
       this.$confirm(deleteContent, '删除项目', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -191,7 +186,7 @@ export default {
       })
     },
     undeleteProject (project) {
-      let deleteContent = `是否确定撤销删除项目 ${project.name} ?`
+      const deleteContent = `是否确定撤销删除项目 ${project.name} ?`
       this.$confirm(deleteContent, '撤销删除项目', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
