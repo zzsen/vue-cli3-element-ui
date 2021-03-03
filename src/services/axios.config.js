@@ -3,7 +3,7 @@ import Qs from 'qs'
 
 // 仅用于开发服对接
 const headers = {
-  'useraccount': 'test1@test.com'
+  useraccount: 'test1@test.com'
 }
 
 const axiosParams = {
