@@ -222,7 +222,7 @@ export default {
       this.adding = false
       this.editing = false
     },
-    searchUser (queryString) {
+    searchUser () {
       this.userArray = this.user
       this.searchingUser = false
     },

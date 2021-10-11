@@ -235,7 +235,7 @@ export default {
       }
       this.adding = false
     },
-    viewDetail (row, event, column) {
+    viewDetail (row/*, event, column*/) {
       this.demandId = row.id
     },
     handleClose () {

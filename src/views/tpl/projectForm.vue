@@ -268,17 +268,19 @@ export default {
 </script>
 
 <style lang='scss'>
-.el-step__line{
-  top: 19px !important;
-}
-.el-select{
-  width: 100%;
-}
-.eventBody>.el-form-item__content{
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-}
-.el-form-item__content{
-  width: calc(100%-80px)!important;
+.projectForm{
+  .el-step__line{
+    top: 19px !important;
+  }
+  .el-select{
+    width: 100%;
+  }
+  .eventBody>.el-form-item__content{
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+  }
+  .el-form-item__content{
+    width: calc(100% - 80px)!important;
+  }
 }
 </style>

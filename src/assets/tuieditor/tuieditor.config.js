@@ -14,6 +14,7 @@ const imageUpload = (blob) => {
   return axios.post('/handle/tui-editor.ashx?action=uploadimage', formData)
     .then(res => {
       // 会默认进入error的回调
+        return console.log(res)
     })
     .catch(err => {
       if (err.data.state === 'SUCCESS') {
